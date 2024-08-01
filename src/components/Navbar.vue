@@ -5,7 +5,7 @@
           <img id="logo" :src="logo" :alt="alt">
         </router-link>
         <router-link to="/">Home</router-link>
-        
+        <router-link to="/estatisticas">Estatisticas</router-link>
       </div>
     </div>
   </template>
@@ -20,7 +20,7 @@
   
   <style scoped>
     #nav {
-      background-color: #1F2A58;
+      background-color: #28397e;
       border-bottom: 4px solid #3859dd;
       padding: 15px 50px;
       display: flex;
@@ -34,8 +34,8 @@
     }
   
     #logo {
-      width: 40px;
-      height: 40px;
+      width: 100px;
+      height: 60px;
     }
   
     #nav a {

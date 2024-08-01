@@ -13,7 +13,7 @@
   <style scoped>
     #footer {
       height: 200px;
-      background-color: #1F2A58;
+      background-color: #28397e;
       border-top: 4px solid #3859dd;
       color: #ffff;
       display: flex;
