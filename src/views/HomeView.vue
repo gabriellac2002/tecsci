@@ -1,12 +1,19 @@
-<script setup>
-
-</script>
-
 <template>
-  <main>
+  <banner></banner>
+  <div class="main-container">
     <h1>Home</h1>
-  </main>
+  </div>
 </template>
 
-<style>
+<script>
+  import Banner from '@/components/Banner.vue';
+  export default{
+    name: "Home",
+    components:{
+      Banner
+    }
+  }
+</script>
+
+<style scoped>
 </style>
