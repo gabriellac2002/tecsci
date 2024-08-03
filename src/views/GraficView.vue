@@ -1,49 +1,72 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-      <v-col cols="12">
-        <v-card>
-          <v-card-title>Visualização de Gráficos</v-card-title>
-          <v-card-subtitle>Escolha o dia para filtrar os dados de cada gráfico</v-card-subtitle>
-          <v-card-text>
-            <v-row>
-              <v-col v-for="(type, index) in chartTypes" :key="index" cols="12" md="6">
-                <v-card>
-                  <v-card-title>Gráfico de {{ chartTitles[index] }}</v-card-title>
-                  <v-card-subtitle>Selecione o dia</v-card-subtitle>
-                  <v-card-text>
-                    <vue-date-picker
-                      v-model="selectedDates[index]"
-                      @change="updateChart(index)"
-                      :type="'date'"
-                      :placeholder="'Selecione o dia'"
-                    />
-                    <Gráfico :type="type" :filteredData="filteredData[index]" :key="index" />
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div class="main_container">
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="12" color="indigo-darken-3">
+          <v-card>
+            <v-card-title>Visualização de Gráficos</v-card-title>
+            <v-card-subtitle
+              >Escolha o dia para filtrar os dados de cada
+              gráfico</v-card-subtitle
+            >
+            <v-card-text>
+              <v-row>
+                <v-col
+                  v-for="(type, index) in chartTypes"
+                  :key="index"
+                  cols="12"
+                  md="6"
+                >
+                  <v-card>
+                    <v-card-title
+                      >Gráfico de {{ chartTitles[index] }}</v-card-title
+                    >
+                    <v-card-subtitle>Selecione o dia</v-card-subtitle>
+                    <v-card-text>
+                      <vue-date-picker
+                        v-model="selectedDates[index]"
+                        @change="updateChart(index)"
+                        :type="'date'"
+                        :placeholder="'Selecione o dia'"
+                      />
+                      <Gráfico
+                        :type="type"
+                        :filteredData="filteredData[index]"
+                        :key="index"
+                      />
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue';
-import { parseISO, startOfDay, endOfDay, isWithinInterval } from 'date-fns';
-import VueDatePicker from '@vuepic/vue-datepicker';
-import Gráfico from '@/components/Grafico.vue';
-import data from '@/db/data.json';
+import { ref, computed } from "vue";
+import { parseISO, startOfDay, endOfDay, isWithinInterval } from "date-fns";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import Gráfico from "@/components/Grafico.vue";
+import data from "@/db/data.json";
 
 export default {
   components: {
     VueDatePicker,
-    Gráfico
+    Gráfico,
   },
   setup() {
-    const chartTypes = ref(['bar', 'bubble', 'doughnut', 'pie', 'line', 'polarArea']);
+    const chartTypes = ref([
+      "bar",
+      "bubble",
+      "doughnut",
+      "pie",
+      "line",
+      "polarArea",
+    ]);
     const selectedDates = ref(new Array(chartTypes.value.length).fill(null));
     const allData = ref(data);
 
@@ -55,7 +78,7 @@ export default {
         const start = startOfDay(selectedDate);
         const end = endOfDay(selectedDate);
 
-        return allData.value.filter(entry => {
+        return allData.value.filter((entry) => {
           const entryDate = parseISO(entry.datetime);
           return isWithinInterval(entryDate, { start, end });
         });
@@ -64,26 +87,35 @@ export default {
 
     const updateChart = (index) => {
       // Atualiza o gráfico específico
-      const graphs = document.querySelectorAll(`.chart-container[data-index="${index}"] canvas`);
-      graphs.forEach(canvas => {
+      const graphs = document.querySelectorAll(
+        `.chart-container[data-index="${index}"] canvas`,
+      );
+      graphs.forEach((canvas) => {
         const chart = canvas.chart;
         if (chart) {
           chart.destroy();
-          canvas.chart = null; // Limpa a referência para garantir que o gráfico seja recriado
+          canvas.chart = null;
         }
       });
     };
 
     const chartTitles = computed(() => {
-      return chartTypes.value.map(type => {
+      return chartTypes.value.map((type) => {
         switch (type) {
-          case 'line': return 'Linha';
-          case 'bar': return 'Barra';
-          case 'bubble': return 'Bolha';
-          case 'doughnut': return 'Rosquinha';
-          case 'pie': return 'Pizza';
-          case 'polarArea': return 'Área Polar';
-          default: return 'Gráfico';
+          case "line":
+            return "Linha";
+          case "bar":
+            return "Barra";
+          case "bubble":
+            return "Bolha";
+          case "doughnut":
+            return "Rosquinha";
+          case "pie":
+            return "Pizza";
+          case "polarArea":
+            return "Área Polar";
+          default:
+            return "Gráfico";
         }
       });
     });
@@ -93,13 +125,17 @@ export default {
       selectedDates,
       filteredData,
       updateChart,
-      chartTitles
+      chartTitles,
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
+.main_container {
+  background-color: #28397e;
+}
+
 .chart-container {
   margin-bottom: 20px;
 }

@@ -9,28 +9,28 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, defineComponent } from 'vue';
-import { Chart, registerables } from 'chart.js';
-import 'chartjs-adapter-date-fns';
-import { parseISO, getYear, getMonth, getWeekOfMonth } from 'date-fns';
+import { ref, onMounted, watch, defineComponent } from "vue";
+import { Chart, registerables } from "chart.js";
+import "chartjs-adapter-date-fns";
+import { parseISO, getYear, getMonth, getWeekOfMonth } from "date-fns";
 
 Chart.register(...registerables);
 
 export default defineComponent({
-  name: 'Gráfico',
+  name: "Gráfico",
   props: {
     type: {
       type: String,
-      required: true
+      required: true,
     },
     filteredData: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     chartIndex: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const myChart = ref(null);
@@ -38,7 +38,7 @@ export default defineComponent({
     const groupDataByWeekOfMonth = (data) => {
       const groupedData = {};
 
-      data.forEach(entry => {
+      data.forEach((entry) => {
         const date = parseISO(entry.datetime);
         const year = getYear(date);
         const month = getMonth(date);
@@ -57,8 +57,8 @@ export default defineComponent({
     };
 
     const getRandomColor = () => {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
+      const letters = "0123456789ABCDEF";
+      let color = "#";
       for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
       }
@@ -66,16 +66,18 @@ export default defineComponent({
     };
 
     const createChart = () => {
-      const ctx = myChart.value.getContext('2d');
+      const ctx = myChart.value.getContext("2d");
       const groupedData = groupDataByWeekOfMonth(props.filteredData);
 
       const chartData = {
         labels: Object.keys(groupedData),
         datasets: [
           {
-            label: 'Quantidade de Dados',
+            label: "Quantidade de Dados",
             data: Object.values(groupedData),
-            backgroundColor: Object.keys(groupedData).map(() => getRandomColor()),
+            backgroundColor: Object.keys(groupedData).map(() =>
+              getRandomColor(),
+            ),
             borderColor: Object.keys(groupedData).map(() => getRandomColor()),
             borderWidth: 1,
           },
@@ -92,9 +94,9 @@ export default defineComponent({
         options: {
           scales: {
             x: {
-              type: 'category',
+              type: "category",
               time: {
-                unit: 'week',
+                unit: "week",
               },
             },
             y: {
@@ -111,29 +113,29 @@ export default defineComponent({
 
     return {
       myChart,
-      createChart
+      createChart,
     };
   },
   computed: {
     chartTitle() {
       switch (this.type) {
-        case 'line':
-          return 'Linha';
-        case 'bar':
-          return 'Barra';
-        case 'bubble':
-          return 'Bolha';
-        case 'doughnut':
-          return 'Rosquinha';
-        case 'pie':
-          return 'Pizza';
-        case 'polarArea':
-          return 'Área Polar';
+        case "line":
+          return "Linha";
+        case "bar":
+          return "Barra";
+        case "bubble":
+          return "Bolha";
+        case "doughnut":
+          return "Rosquinha";
+        case "pie":
+          return "Pizza";
+        case "polarArea":
+          return "Área Polar";
         default:
-          return 'Gráfico';
+          return "Gráfico";
       }
-    }
-  }
+    },
+  },
 });
 </script>
 

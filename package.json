@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "back": "json-server --watch db/data.json"
+    "back": "json-server --watch db/data.json",
+    "format": "prettier .  --write"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^9.0.1",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "prettier": "3.3.3",
     "vite": "^5.3.1"
   }
 }
