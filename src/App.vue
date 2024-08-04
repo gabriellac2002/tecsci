@@ -14,7 +14,7 @@ import Footer from "./components/Footer.vue";
 export default {
   data: function () {
     return {
-      logo_src: "public/logo.png",
+      logo_src: "/logo.png",
       app_name: "Logo TECSCI",
     };
   },
