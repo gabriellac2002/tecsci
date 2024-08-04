@@ -5,7 +5,9 @@
         <img id="logo" :src="logo" :alt="alt" />
       </router-link>
       <router-link to="/">Home</router-link>
-      <router-link v-if="isAuthenticated" to="/estatisticas">Estatísticas</router-link>
+      <router-link v-if="isAuthenticated" to="/estatisticas"
+        >Estatísticas</router-link
+      >
       <v-btn icon @click="handleAuthAction" class="auth-btn">
         <img :src="authIcon" alt="auth icon" class="auth-icon" />
       </v-btn>
@@ -14,11 +16,11 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import { useUserStore } from '@/stores/userStore';
-import { useRouter } from 'vue-router';
-import logoffIcon from '@/assets/logoff.svg';
-import loginIcon from '@/assets/login.svg'
+import { computed } from "vue";
+import { useUserStore } from "@/stores/userStore";
+import { useRouter } from "vue-router";
+import logoffIcon from "@/assets/logoff.svg";
+import loginIcon from "@/assets/login.svg";
 
 export default {
   name: "Navbar",
@@ -31,20 +33,22 @@ export default {
     const handleAuthAction = () => {
       if (isAuthenticated.value) {
         userStore.logOut();
-        router.push({ name: 'home' });
+        router.push({ name: "home" });
       } else {
-        router.push({ name: 'login' });
+        router.push({ name: "login" });
       }
     };
 
-    const authIcon = computed(() => isAuthenticated.value ? logoffIcon : loginIcon); 
+    const authIcon = computed(() =>
+      isAuthenticated.value ? logoffIcon : loginIcon,
+    );
 
     return {
       isAuthenticated,
       handleAuthAction,
-      authIcon
+      authIcon,
     };
-  }
+  },
 };
 </script>
 
@@ -83,17 +87,17 @@ export default {
   color: #3ea7e5;
   margin: 12px;
   transition: 0.5s;
-  background: none; 
-  box-shadow: none; 
-  border-radius: 0; 
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .v-btn:hover {
-  background: none; 
+  background: none;
 }
 
 .auth-icon {
-  width: 24px; 
-  height: 24px; 
+  width: 24px;
+  height: 24px;
 }
 </style>

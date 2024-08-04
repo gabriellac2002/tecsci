@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 // Vuetify
 import "vuetify/styles";

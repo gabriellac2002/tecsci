@@ -1,45 +1,35 @@
 <template>
   <div class="main_container">
-    <v-container>
+    <Banner bannerText="Acompanhe nossos ótimos resultados!" />
+    <v-container style="padding: 20px">
       <v-row justify="center">
-        <v-col cols="12" color="indigo-darken-3">
-          <v-card>
-            <v-card-title>Visualização de Gráficos</v-card-title>
-            <v-card-subtitle
-              >Escolha o dia para filtrar os dados de cada
-              gráfico</v-card-subtitle
+        <v-col cols="12">
+          <v-row>
+            <v-col
+              v-for="(type, index) in chartTypes"
+              :key="index"
+              cols="12"
+              md="6"
             >
-            <v-card-text>
-              <v-row>
-                <v-col
-                  v-for="(type, index) in chartTypes"
-                  :key="index"
-                  cols="12"
-                  md="6"
-                >
-                  <v-card>
-                    <v-card-title
-                      >Gráfico de {{ chartTitles[index] }}</v-card-title
-                    >
-                    <v-card-subtitle>Selecione o dia</v-card-subtitle>
-                    <v-card-text>
-                      <vue-date-picker
-                        v-model="selectedDates[index]"
-                        @change="updateChart(index)"
-                        :type="'date'"
-                        :placeholder="'Selecione o dia'"
-                      />
-                      <Gráfico
-                        :type="type"
-                        :filteredData="filteredData[index]"
-                        :key="index"
-                      />
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
+              <v-card class="chart-card">
+                <v-card-title>Gráfico de {{ chartTitles[index] }}</v-card-title>
+                <v-card-subtitle>Selecione o dia</v-card-subtitle>
+                <v-card-text>
+                  <vue-date-picker
+                    v-model="selectedDates[index]"
+                    @change="updateChart(index)"
+                    :type="'date'"
+                    :placeholder="'Selecione o dia'"
+                  />
+                  <Gráfico
+                    :type="type"
+                    :filteredData="filteredData[index]"
+                    :key="index"
+                  />
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -52,11 +42,13 @@ import { parseISO, startOfDay, endOfDay, isWithinInterval } from "date-fns";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import Gráfico from "@/components/Grafico.vue";
 import data from "@/db/data.json";
+import Banner from "@/components/Banner.vue";
 
 export default {
   components: {
     VueDatePicker,
     Gráfico,
+    Banner,
   },
   setup() {
     const chartTypes = ref([
@@ -134,6 +126,30 @@ export default {
 <style scoped>
 .main_container {
   background-color: #28397e;
+  color: #fff;
+}
+
+.intro-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.intro-subtitle {
+  font-size: 18px;
+  font-style: italic;
+  color: #fff;
+}
+
+.chart-card {
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+}
+
+.v-card-title,
+.v-card-subtitle {
+  color: #000;
 }
 
 .chart-container {
